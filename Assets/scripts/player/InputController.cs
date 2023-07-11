@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     private ActionsMap.PlayerMoves1Actions playerOnFootMove;
 
     private PlayerMovementController movementControl;
+    private PlayerLookController lookController;
 
     // Start is called before the first frame update
     void Awake()
@@ -16,10 +17,17 @@ public class InputController : MonoBehaviour
         map = new ActionsMap();
         playerOnFootMove = map.playerMoves1;
         movementControl = GetComponent<PlayerMovementController>();
+        lookController = GetComponent<PlayerLookController>();
+
+        playerOnFootMove.jump.performed += ctx => movementControl.Jump();
     }
 
     private void FixedUpdate() {
         movementControl.setPlayerMovement(playerOnFootMove.movement.ReadValue<Vector2>());
+    }
+
+    private void LateUpdate() {
+        lookController.setLook(playerOnFootMove.view.ReadValue<Vector2>());
     }
 
     private void OnEnable() {

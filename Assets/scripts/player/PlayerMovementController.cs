@@ -10,8 +10,12 @@ public class PlayerMovementController : MonoBehaviour
     private float playerAccelerationSpeed = 50f;
     private Vector3 playerVelocity;
 
+    public bool isGrounded;
+    private float jumpForce = 5f;
+
     private void Awake() {
         rigidBody = GetComponent<Rigidbody>();
+        isGrounded = true;
     }
 
     private Vector3 playerDirection = Vector3.zero;
@@ -21,5 +25,21 @@ public class PlayerMovementController : MonoBehaviour
         playerDirection = new Vector3(playerInput.x, 0, playerInput.y).normalized;
         playerVelocity = Vector3.SmoothDamp(playerVelocity, playerDirection * maxPlayerSpeed, ref currentPlayerVelocity, maxPlayerSpeed / playerAccelerationSpeed);
         return transform.position += playerVelocity * Time.deltaTime;
+    }
+
+    public void Jump()
+    {
+        if(isGrounded)
+        {
+            rigidBody.AddForce((Vector3.up * jumpForce), ForceMode.Impulse);
+        }
+    }
+
+    private bool OnCollisionEnter(Collision col) {
+        return isGrounded = true;
+    }
+
+    private bool OnCollisionExit(Collision col) {
+        return isGrounded = false;
     }
 }

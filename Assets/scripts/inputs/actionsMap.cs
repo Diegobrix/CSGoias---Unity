@@ -44,6 +44,15 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""view"",
+                    ""type"": ""Value"",
+                    ""id"": ""2c73720b-cb77-4494-addc-87b5fa42b1df"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                     ""action"": ""jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fb2d7c2-010a-4bea-af8c-b3335cbf3cad"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""view"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +142,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         m_playerMoves1 = asset.FindActionMap("playerMoves1", throwIfNotFound: true);
         m_playerMoves1_movement = m_playerMoves1.FindAction("movement", throwIfNotFound: true);
         m_playerMoves1_jump = m_playerMoves1.FindAction("jump", throwIfNotFound: true);
+        m_playerMoves1_view = m_playerMoves1.FindAction("view", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,12 +204,14 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
     private IPlayerMoves1Actions m_PlayerMoves1ActionsCallbackInterface;
     private readonly InputAction m_playerMoves1_movement;
     private readonly InputAction m_playerMoves1_jump;
+    private readonly InputAction m_playerMoves1_view;
     public struct PlayerMoves1Actions
     {
         private @ActionsMap m_Wrapper;
         public PlayerMoves1Actions(@ActionsMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @movement => m_Wrapper.m_playerMoves1_movement;
         public InputAction @jump => m_Wrapper.m_playerMoves1_jump;
+        public InputAction @view => m_Wrapper.m_playerMoves1_view;
         public InputActionMap Get() { return m_Wrapper.m_playerMoves1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -204,6 +227,9 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                 @jump.started -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnJump;
                 @jump.performed -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnJump;
                 @jump.canceled -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnJump;
+                @view.started -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnView;
+                @view.performed -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnView;
+                @view.canceled -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnView;
             }
             m_Wrapper.m_PlayerMoves1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -214,6 +240,9 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                 @jump.started += instance.OnJump;
                 @jump.performed += instance.OnJump;
                 @jump.canceled += instance.OnJump;
+                @view.started += instance.OnView;
+                @view.performed += instance.OnView;
+                @view.canceled += instance.OnView;
             }
         }
     }
@@ -222,5 +251,6 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnView(InputAction.CallbackContext context);
     }
 }
