@@ -23,7 +23,7 @@ public class InputController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        movementControl.setPlayerMovement(playerOnFootMove.movement.ReadValue<Vector2>());
+        movementControl.SetPlayerMovement(playerOnFootMove.movement.ReadValue<Vector2>());
     }
 
     private void LateUpdate() {

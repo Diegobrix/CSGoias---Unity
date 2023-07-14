@@ -20,11 +20,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private Vector3 playerDirection = Vector3.zero;
     private Vector3 currentPlayerVelocity;
-    public Vector3 setPlayerMovement(Vector2 playerInput)
+    public void SetPlayerMovement(Vector2 playerInput)
     {
-        playerDirection = new Vector3(playerInput.x, 0, playerInput.y).normalized;
+        playerDirection = new Vector3(playerInput.x, 0f, playerInput.y).normalized;
         playerVelocity = Vector3.SmoothDamp(playerVelocity, playerDirection * maxPlayerSpeed, ref currentPlayerVelocity, maxPlayerSpeed / playerAccelerationSpeed);
-        return transform.position += playerVelocity * Time.deltaTime;
+        transform.position += transform.TransformDirection(playerVelocity) * Time.deltaTime;
     }
 
     public void Jump()
@@ -35,11 +35,11 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private bool OnCollisionEnter(Collision col) {
-        return isGrounded = true;
+    private void OnCollisionEnter(Collision col) {
+        isGrounded = true;
     }
 
-    private bool OnCollisionExit(Collision col) {
-        return isGrounded = false;
+    private void OnCollisionExit(Collision col) {
+        isGrounded = false;
     }
 }
