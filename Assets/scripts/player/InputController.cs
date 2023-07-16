@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
     private ActionsMap map;
-    private ActionsMap.PlayerMoves1Actions playerOnFootMove;
+    public ActionsMap.PlayerMoves1Actions playerOnFootMove;
 
     private PlayerMovementController movementControl;
     private PlayerLookController lookController;

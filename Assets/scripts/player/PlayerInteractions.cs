@@ -8,8 +8,10 @@ public class PlayerInteractions : MonoBehaviour, IInteractable
     [SerializeField] private float maxRayLength = 5f;
     [SerializeField] private LayerMask mask;
     private PlayerUI ui;
+    private InputController inputController;
 
     private void Awake() {
+        inputController = GetComponent<InputController>();
         playerCamera = Camera.main;
         ui = GetComponent<PlayerUI>();
         mask = LayerMask.GetMask("InteractableElement");
@@ -25,20 +27,18 @@ public class PlayerInteractions : MonoBehaviour, IInteractable
 
         if(Physics.Raycast(ray, out hitInfo, maxRayLength, mask))
         {
-            IInteractable hitObject = hitInfo.transform.GetComponent<IInteractable>();
+            IInteractable hitObj = hitInfo.collider.GetComponent<IInteractable>();
             InteractionsMessage hitMessage = hitInfo.collider.GetComponent<InteractionsMessage>();
-
-            if(hitObject == null)
-            {
-                return;
-            }
 
             if(hitMessage != null)
             {
                 ui.SetText(hitMessage.msg);
             }
-            
-            hitObject.Interact();
+
+            if(inputController.playerOnFootMove.interact.triggered)
+            {
+                hitObj.Interact();
+            }
         }
     }
 
