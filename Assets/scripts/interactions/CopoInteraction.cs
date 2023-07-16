@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CopoInteraction : MonoBehaviour, IInteractable
 {
+    private Camera playerPosition;
+    private Rigidbody copoRigidbody;
+    [SerializeField] private float hitForce = 1.5f;
+    
+    private void Awake() {
+        playerPosition = Camera.main;
+        copoRigidbody = GetComponent<Rigidbody>();
+    }
+
     public void Interact()
     {
         BeThrown();
@@ -11,6 +20,6 @@ public class CopoInteraction : MonoBehaviour, IInteractable
 
     private void BeThrown()
     {
-        Debug.Log("Fui embora");
+        copoRigidbody.AddForce((playerPosition.transform.forward * hitForce), ForceMode.Impulse);
     }
 }
