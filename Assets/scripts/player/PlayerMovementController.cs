@@ -35,11 +35,19 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision col) {
-        isGrounded = true;
+    private void OnCollisionEnter(Collision col) 
+    {
+        if(col.collider.tag == "Ground")
+        {
+            isGrounded = true;
+        }
     }
 
-    private void OnCollisionExit(Collision col) {
-        isGrounded = false;
+    private void OnCollisionExit(Collision col) 
+    {
+        if(col.collider.tag == "Ground")
+        {
+            isGrounded = false;
+        }
     }
 }
