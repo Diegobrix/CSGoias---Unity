@@ -17,7 +17,7 @@ public class PlayerMovementController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         isGrounded = true;
     }
-
+    
     private Vector3 playerDirection = Vector3.zero;
     private Vector3 currentPlayerVelocity;
     public void SetPlayerMovement(Vector2 playerInput)
