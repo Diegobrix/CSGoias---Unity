@@ -10,6 +10,7 @@ public class InputController : MonoBehaviour
 
     private PlayerMovementController movementControl;
     private PlayerLookController lookController;
+    private Gun gunController;
 
     // Start is called before the first frame update
     void Awake()
@@ -18,8 +19,10 @@ public class InputController : MonoBehaviour
         playerOnFootMove = map.playerMoves1;
         movementControl = GetComponent<PlayerMovementController>();
         lookController = GetComponent<PlayerLookController>();
+        gunController = GameObject.Find("Gun").GetComponent<Gun>();
 
         playerOnFootMove.jump.performed += ctx => movementControl.Jump();
+        playerOnFootMove.shoot.performed += ctx => gunController.Shoot();
     }
 
     private void FixedUpdate() {

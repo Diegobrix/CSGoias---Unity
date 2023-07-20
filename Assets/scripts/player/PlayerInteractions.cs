@@ -24,7 +24,6 @@ public class PlayerInteractions : MonoBehaviour, IInteractable
         Debug.DrawRay(ray.origin, ray.direction * maxRayLength);
 
         RaycastHit hitInfo;
-
         if(Physics.Raycast(ray, out hitInfo, maxRayLength, mask))
         {
             IInteractable hitObj = hitInfo.collider.GetComponent<IInteractable>();

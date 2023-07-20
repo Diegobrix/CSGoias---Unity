@@ -62,6 +62,15 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7c25347-fab3-4771-9fb0-11b2823924a9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -150,6 +159,17 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70188237-426a-4379-b346-975ba152f095"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -680,6 +700,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         m_playerMoves1_jump = m_playerMoves1.FindAction("jump", throwIfNotFound: true);
         m_playerMoves1_view = m_playerMoves1.FindAction("view", throwIfNotFound: true);
         m_playerMoves1_interact = m_playerMoves1.FindAction("interact", throwIfNotFound: true);
+        m_playerMoves1_shoot = m_playerMoves1.FindAction("shoot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -755,6 +776,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_playerMoves1_jump;
     private readonly InputAction m_playerMoves1_view;
     private readonly InputAction m_playerMoves1_interact;
+    private readonly InputAction m_playerMoves1_shoot;
     public struct PlayerMoves1Actions
     {
         private @ActionsMap m_Wrapper;
@@ -763,6 +785,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         public InputAction @jump => m_Wrapper.m_playerMoves1_jump;
         public InputAction @view => m_Wrapper.m_playerMoves1_view;
         public InputAction @interact => m_Wrapper.m_playerMoves1_interact;
+        public InputAction @shoot => m_Wrapper.m_playerMoves1_shoot;
         public InputActionMap Get() { return m_Wrapper.m_playerMoves1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -784,6 +807,9 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                 @interact.started -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnInteract;
                 @interact.performed -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnInteract;
                 @interact.canceled -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnInteract;
+                @shoot.started -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnShoot;
+                @shoot.performed -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnShoot;
+                @shoot.canceled -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_PlayerMoves1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -800,6 +826,9 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                 @interact.started += instance.OnInteract;
                 @interact.performed += instance.OnInteract;
                 @interact.canceled += instance.OnInteract;
+                @shoot.started += instance.OnShoot;
+                @shoot.performed += instance.OnShoot;
+                @shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -915,6 +944,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnView(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

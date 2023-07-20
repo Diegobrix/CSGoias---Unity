@@ -18,10 +18,8 @@ public class KeypadInteraction : InteractionsMessage, IInteractable
         UseKeypad();
     }
 
-    private int pass; 
     private void UseKeypad()
     {
-        pass = 321;
         isOpen = true;
         msg = string.Empty;
 
