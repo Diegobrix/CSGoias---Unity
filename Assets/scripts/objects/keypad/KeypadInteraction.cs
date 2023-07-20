@@ -22,7 +22,8 @@ public class KeypadInteraction : InteractionsMessage, IInteractable
     private void UseKeypad()
     {
         pass = 321;
-        isOpen = !isOpen;
+        isOpen = true;
+        msg = string.Empty;
 
         cellDoor.GetComponent<Animator>().SetBool("IsOpen", isOpen);
     }
