@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IShot
 {
-    public void Hit(Vector3 direction)
-    {
+    public float maxEnemyLife;
+    private float currentEnemyLife;
 
+    private void Awake() {
+        maxEnemyLife = 30f;
+        currentEnemyLife = maxEnemyLife;
     }
 
-    private void GetShotted(Vector3 shotOrigin)
+    public void Hit(Vector3 direction, float damage)
     {
-        Debug.Log(shotOrigin);
+        GetShotted(direction, damage);
+    }
+
+    private void GetShotted(Vector3 shotOrigin, float gunDamage)
+    {
+        if(gunDamage >= currentEnemyLife)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        currentEnemyLife -= gunDamage;
     }
 }
