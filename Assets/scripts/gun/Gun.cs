@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        Ray ray = new Ray(playerCamera.transform.position, gunPosition.transform.forward);
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hitInfo;
 
         if(Physics.Raycast(ray, out hitInfo, shootDistance))

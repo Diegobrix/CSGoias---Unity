@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, IShot
 
     private void GetShotted(Vector3 shotOrigin, float gunDamage)
     {
+        Debug.Log("Ai Papai");
         if(gunDamage >= currentEnemyLife)
         {
             Destroy(gameObject);

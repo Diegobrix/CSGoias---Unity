@@ -19,10 +19,11 @@ public class InputController : MonoBehaviour
         playerOnFootMove = map.playerMoves1;
         movementControl = GetComponent<PlayerMovementController>();
         lookController = GetComponent<PlayerLookController>();
-        gunController = GameObject.Find("Gun").GetComponent<Gun>();
+
+        VerifyIfGunExists();
 
         playerOnFootMove.jump.performed += ctx => movementControl.Jump();
-        playerOnFootMove.shoot.performed += ctx => gunController.Shoot();
+        
     }
 
     private void FixedUpdate() {
@@ -39,5 +40,17 @@ public class InputController : MonoBehaviour
 
     private void OnDisable() {
         playerOnFootMove.Disable();
+    }
+
+    private void VerifyIfGunExists()
+    {
+        if(GameObject.Find("Gun"))
+        {
+            gunController = GameObject.Find("Gun").GetComponent<Gun>();
+        }
+        if(gunController != null)
+        {
+            playerOnFootMove.shoot.performed += ctx => gunController.Shoot();
+        }
     }
 }
