@@ -9,7 +9,7 @@ public class GunPickUp : InteractionsMessage, IInteractable
     public void Awake()
     {
         msg = "Pegar Arma";
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player_Hand").transform;
     }
 
     public void Interact()
