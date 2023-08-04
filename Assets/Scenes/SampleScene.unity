@@ -2900,6 +2900,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Soldier
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1121df189d0f0504e94e98b699508ced, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1121df189d0f0504e94e98b699508ced, type: 3}
 --- !u!1 &1920360001 stripped
@@ -2972,6 +2976,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &1920360007
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920360001}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7000004
+  m_Height: 2.7686615
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.272727, z: -0.00000035762787}
 --- !u!1 &1997097633
 GameObject:
   m_ObjectHideFlags: 0

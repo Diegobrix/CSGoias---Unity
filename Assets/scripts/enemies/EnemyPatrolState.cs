@@ -6,6 +6,8 @@ public class EnemyPatrolState : StateController
 {
     private int pathPointIndex;
     private float minDistanceToTarget = .5f;
+    private float patrolWait;
+    [SerializeField] private float waitTime = 5f;
 
    public override void EnterState()
    {
@@ -24,16 +26,21 @@ public class EnemyPatrolState : StateController
    {
         if(enemy.MeshAgent.remainingDistance < minDistanceToTarget)
         {
-            if(pathPointIndex < enemy.enemyPatrolPath.enemyPossiblePath.Count - 1)
+            patrolWait += Time.deltaTime;
+            if(patrolWait > waitTime)
             {
-                pathPointIndex += 1;
+                if(pathPointIndex < enemy.enemyPatrolPath.enemyPossiblePath.Count - 1)
+                {
+                    pathPointIndex += 1;
+                }
+                else
+                {
+                    pathPointIndex = 0;
+                }
+                
+                enemy.MeshAgent.SetDestination(enemy.enemyPatrolPath.enemyPossiblePath[pathPointIndex].position);      
+                patrolWait = 0;        
             }
-            else
-            {
-                pathPointIndex = 0;
-            }
-            
-            enemy.MeshAgent.SetDestination(enemy.enemyPatrolPath.enemyPossiblePath[pathPointIndex].position);
         }
    }
 }

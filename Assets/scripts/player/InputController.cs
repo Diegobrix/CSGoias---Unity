@@ -10,7 +10,8 @@ public class InputController : MonoBehaviour
 
     private PlayerMovementController movementControl;
     private PlayerLookController lookController;
-    private Gun gunController;
+    public Gun gunPicked;
+    private GameObject gun;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,14 +21,20 @@ public class InputController : MonoBehaviour
         movementControl = GetComponent<PlayerMovementController>();
         lookController = GetComponent<PlayerLookController>();
 
-        VerifyIfGunExists();
+        gun = GameObject.Find("Gun");
+
+        VerifyShootPossibility();
 
         playerOnFootMove.jump.performed += ctx => movementControl.Jump();
-        
     }
 
     private void FixedUpdate() {
         movementControl.SetPlayerMovement(playerOnFootMove.movement.ReadValue<Vector2>());
+
+        if(gunPicked == null)
+        {
+            VerifyShootPossibility();
+        }
     }
 
     private void LateUpdate() {
@@ -42,15 +49,17 @@ public class InputController : MonoBehaviour
         playerOnFootMove.Disable();
     }
 
-    private void VerifyIfGunExists()
+    private void VerifyShootPossibility()
     {
-        if(GameObject.Find("Gun"))
+        
+        if((gun.transform.parent != null) && (gun.transform.parent.gameObject.name == "Player_Hand"))
         {
-            gunController = GameObject.Find("Gun").GetComponent<Gun>();
+            gunPicked = gun.GetComponent<Gun>();
         }
-        if(gunController != null)
+
+        if(gunPicked != null)
         {
-            playerOnFootMove.shoot.performed += ctx => gunController.Shoot();
+            playerOnFootMove.shoot.performed += ctx => gunPicked.Shoot();
         }
     }
 }

@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GunPickUp : InteractionsMessage, IInteractable
 {
     private Transform player;
+    private Gun gunController;
 
+    private GameObject gun;
     public void Awake()
-    {
+    {        
         msg = "Pegar Arma";
         player = GameObject.Find("Player_Hand").transform;
     }
