@@ -42,9 +42,7 @@ public class GunPickUp : InteractionsMessage, IInteractable
             gunBoxCollider.enabled = false;
         }
 
-        transform.position = playerHand.position;
-        transform.rotation = playerHand.rotation;
-        transform.SetParent(player);
+        SetGunPosition();
 
         inputController = player.transform.GetComponent<InputController>();
         gunController = transform.GetComponent<Gun>();
@@ -53,6 +51,13 @@ public class GunPickUp : InteractionsMessage, IInteractable
         {
             SetShoot();
         }
+    }
+
+    private void SetGunPosition()
+    {
+        transform.position = playerHand.position;
+        transform.rotation = playerHand.rotation;
+        transform.SetParent(player);
     }
 
     private void SetShoot()

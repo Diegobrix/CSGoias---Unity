@@ -5,12 +5,13 @@ using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] private Camera playerCamera;
-    [SerializeField] private float shootDistance = 20f;
+    public Camera playerCamera;
     private Transform gunPosition;
-    [SerializeField] private float gunDamage = 10f;
 
-    private void Awake() {
+    public GunParamsController gunParameters;
+    public int gunId;
+
+    protected virtual void Awake() {
         playerCamera = Camera.main;
         gunPosition = GetComponent<Transform>();
     }
@@ -19,8 +20,8 @@ public class Gun : MonoBehaviour
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hitInfo;
-
-        if(Physics.Raycast(ray, out hitInfo, shootDistance))
+        
+        if(Physics.Raycast(ray, out hitInfo, gunParameters.guns[gunId].shootDistance))
         {
             IShot shootedObj = hitInfo.collider.GetComponent<IShot>();
 
@@ -29,7 +30,7 @@ public class Gun : MonoBehaviour
                 return;
             }
 
-            shootedObj.Hit(playerCamera.transform.position, gunDamage);
+            shootedObj.Hit(playerCamera.transform.position, gunParameters.guns[gunId].gunDamage);
         }
     }
 }
