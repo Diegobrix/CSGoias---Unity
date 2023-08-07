@@ -5,14 +5,21 @@ using UnityEngine.InputSystem;
 
 public class GunPickUp : InteractionsMessage, IInteractable
 {
+    private Transform playerHand;
     private Transform player;
     private Gun gunController;
 
     private GameObject gun;
+    public InputController inputController;
+    
+    private Rigidbody gunRigidbody;
+    private BoxCollider gunBoxCollider;
+    
     public void Awake()
     {        
         msg = "Pegar Arma";
-        player = GameObject.Find("Player_Hand").transform;
+        player = GameObject.Find("Player").transform;
+        playerHand = GameObject.Find("Player_Hand").transform;
     }
 
     public void Interact()
@@ -22,11 +29,34 @@ public class GunPickUp : InteractionsMessage, IInteractable
 
     private void PickGun()
     {
-        transform.GetComponent<Rigidbody>().isKinematic = true;
-        transform.GetComponent<BoxCollider>().enabled = false;
+        gunRigidbody = transform.GetComponent<Rigidbody>();
+        gunBoxCollider = transform.GetComponent<BoxCollider>();
 
-        transform.position = player.position;
-        transform.rotation = player.rotation;
+        if(gunRigidbody != null)
+        {
+            gunRigidbody.isKinematic = true;
+        }
+
+        if(gunBoxCollider != null)
+        {
+            gunBoxCollider.enabled = false;
+        }
+
+        transform.position = playerHand.position;
+        transform.rotation = playerHand.rotation;
         transform.SetParent(player);
+
+        inputController = player.transform.GetComponent<InputController>();
+        gunController = transform.GetComponent<Gun>();
+
+        if(gunController != null)
+        {
+            SetShoot();
+        }
+    }
+
+    private void SetShoot()
+    {
+        inputController.playerOnFootMove.shoot.performed += ctx => gunController.Shoot();
     }
 }
