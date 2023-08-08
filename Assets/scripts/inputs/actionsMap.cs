@@ -71,6 +71,15 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""run"",
+                    ""type"": ""Button"",
+                    ""id"": ""965b385b-5d31-41f8-b583-561610cfaeb2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,6 +179,17 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84829270-01d0-4633-8e73-251e1cc12207"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -701,6 +721,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         m_playerMoves1_view = m_playerMoves1.FindAction("view", throwIfNotFound: true);
         m_playerMoves1_interact = m_playerMoves1.FindAction("interact", throwIfNotFound: true);
         m_playerMoves1_shoot = m_playerMoves1.FindAction("shoot", throwIfNotFound: true);
+        m_playerMoves1_run = m_playerMoves1.FindAction("run", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -777,6 +798,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_playerMoves1_view;
     private readonly InputAction m_playerMoves1_interact;
     private readonly InputAction m_playerMoves1_shoot;
+    private readonly InputAction m_playerMoves1_run;
     public struct PlayerMoves1Actions
     {
         private @ActionsMap m_Wrapper;
@@ -786,6 +808,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         public InputAction @view => m_Wrapper.m_playerMoves1_view;
         public InputAction @interact => m_Wrapper.m_playerMoves1_interact;
         public InputAction @shoot => m_Wrapper.m_playerMoves1_shoot;
+        public InputAction @run => m_Wrapper.m_playerMoves1_run;
         public InputActionMap Get() { return m_Wrapper.m_playerMoves1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -810,6 +833,9 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                 @shoot.started -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnShoot;
                 @shoot.performed -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnShoot;
                 @shoot.canceled -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnShoot;
+                @run.started -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnRun;
+                @run.performed -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnRun;
+                @run.canceled -= m_Wrapper.m_PlayerMoves1ActionsCallbackInterface.OnRun;
             }
             m_Wrapper.m_PlayerMoves1ActionsCallbackInterface = instance;
             if (instance != null)
@@ -829,6 +855,9 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
                 @shoot.started += instance.OnShoot;
                 @shoot.performed += instance.OnShoot;
                 @shoot.canceled += instance.OnShoot;
+                @run.started += instance.OnRun;
+                @run.performed += instance.OnRun;
+                @run.canceled += instance.OnRun;
             }
         }
     }
@@ -945,6 +974,7 @@ public partial class @ActionsMap : IInputActionCollection2, IDisposable
         void OnView(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

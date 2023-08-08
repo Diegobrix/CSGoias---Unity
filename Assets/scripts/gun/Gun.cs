@@ -11,7 +11,8 @@ public class Gun : MonoBehaviour
     public GunParamsController gunParameters;
     public int gunId;
 
-    protected virtual void Awake() {
+    protected virtual void Awake()
+    {
         playerCamera = Camera.main;
         gunPosition = GetComponent<Transform>();
     }

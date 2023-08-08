@@ -10,14 +10,18 @@ public class PlayerInteractions : MonoBehaviour, IInteractable
     private PlayerUI ui;
     private InputController inputController;
 
-    private void Awake() {
+    public GunParamsController gunParams;
+
+    private void Awake()
+    {
         inputController = GetComponent<InputController>();
         playerCamera = Camera.main;
         ui = GetComponent<PlayerUI>();
         mask = LayerMask.GetMask("InteractableElement");
     }
 
-    private void Update() {
+    private void Update()
+    {
         ui.SetText(string.Empty);
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
@@ -27,11 +31,11 @@ public class PlayerInteractions : MonoBehaviour, IInteractable
         if(Physics.Raycast(ray, out hitInfo, maxRayLength, mask))
         {
             IInteractable hitObj = hitInfo.collider.GetComponent<IInteractable>();
-            InteractionsMessage hitMessage = hitInfo.collider.GetComponent<InteractionsMessage>();
+            Gun gun = hitInfo.collider.GetComponent<Gun>();
 
-            if(hitMessage != null)
+            if(gun != null)
             {
-                ui.SetText(hitMessage.msg);
+                ui.SetText($"Pegar - {gunParams.guns[gun.gunId].gunName}");
             }
 
             if(inputController.playerOnFootMove.interact.triggered)
@@ -39,10 +43,5 @@ public class PlayerInteractions : MonoBehaviour, IInteractable
                 hitObj.Interact();
             }
         }
-    }
-
-    public void Interact()
-    {
-        //Chamar função de interação 
     }
 }

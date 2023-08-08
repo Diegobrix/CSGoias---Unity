@@ -16,8 +16,7 @@ public class GunPickUp : InteractionsMessage, IInteractable
     private BoxCollider gunBoxCollider;
     
     public void Awake()
-    {        
-        msg = "Pegar Arma";
+    { 
         player = GameObject.Find("Player").transform;
         playerHand = GameObject.Find("Player_Hand").transform;
     }

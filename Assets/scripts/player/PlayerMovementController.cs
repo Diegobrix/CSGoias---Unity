@@ -6,8 +6,8 @@ public class PlayerMovementController : MonoBehaviour
 {
     private Rigidbody rigidBody;
     
-    private float maxPlayerSpeed = 10f;
-    private float playerAccelerationSpeed = 50f;
+    [SerializeField] private float maxPlayerSpeed;
+    [SerializeField] private float playerAccelerationSpeed;
     private Vector3 playerVelocity;
 
     public bool isGrounded;
@@ -16,6 +16,9 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake() {
         rigidBody = GetComponent<Rigidbody>();
         isGrounded = true;
+
+        maxPlayerSpeed = 10f;
+        playerAccelerationSpeed = (maxPlayerSpeed * 5);
     }
     
     private Vector3 playerDirection = Vector3.zero;
@@ -33,6 +36,16 @@ public class PlayerMovementController : MonoBehaviour
         {
             rigidBody.AddForce((Vector3.up * jumpForce), ForceMode.Impulse);
         }
+    }
+
+    public float PlayerStartRun()
+    {
+        return maxPlayerSpeed = 20f;
+    }
+
+    public float PlayerStopRun()
+    {
+        return maxPlayerSpeed = 10f;
     }
 
     private void OnCollisionEnter(Collision col) 

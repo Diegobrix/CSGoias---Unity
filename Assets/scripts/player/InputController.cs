@@ -22,21 +22,28 @@ public class InputController : MonoBehaviour
         gun = GameObject.Find("Gun");
 
         playerOnFootMove.jump.performed += ctx => movementControl.Jump();
+
+        playerOnFootMove.run.started += ctx => movementControl.PlayerStartRun();
+        playerOnFootMove.run.canceled += ctx => movementControl.PlayerStopRun();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         movementControl.SetPlayerMovement(playerOnFootMove.movement.ReadValue<Vector2>());
     }
 
-    private void LateUpdate() {
+    private void LateUpdate()
+    {
         lookController.setLook(playerOnFootMove.view.ReadValue<Vector2>());
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         playerOnFootMove.Enable();    
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         playerOnFootMove.Disable();
     }
 }
