@@ -8,17 +8,25 @@ public class GunPickUp : InteractionsMessage, IInteractable
     private Transform playerHand;
     private Transform player;
     private Gun gunController;
+    private PlayerLookController lookController;
 
     private GameObject gun;
     public InputController inputController;
     
     private Rigidbody gunRigidbody;
     private BoxCollider gunBoxCollider;
+
+    public GunMovementController gunMovementController;
+    public bool isEquipped;
+
     
     public void Awake()
     { 
         player = GameObject.Find("Player").transform;
         playerHand = GameObject.Find("Player_Hand").transform;
+        lookController = player.GetComponent<PlayerLookController>();
+
+        isEquipped = false;
     }
 
     public void Interact()
@@ -48,7 +56,8 @@ public class GunPickUp : InteractionsMessage, IInteractable
 
         if(gunController != null)
         {
-            SetShoot();
+            SetShoot(); 
+            EquipGun();
         }
     }
 
@@ -56,11 +65,16 @@ public class GunPickUp : InteractionsMessage, IInteractable
     {
         transform.position = playerHand.position;
         transform.rotation = playerHand.rotation;
-        transform.SetParent(player);
+        transform.SetParent(playerHand);
     }
 
     private void SetShoot()
     {
         inputController.playerOnFootMove.shoot.performed += ctx => gunController.Shoot();
+    }
+
+    public void EquipGun()
+    {
+        isEquipped = true;
     }
 }

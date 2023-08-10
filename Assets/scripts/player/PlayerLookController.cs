@@ -4,24 +4,39 @@ using UnityEngine;
 
 public class PlayerLookController : MonoBehaviour
 {
+    public InputController inputController;
+
     public Camera playerCamera;
     private Transform playerTransform;
     private float xRot = 0f;
-
-    //Caso queira especificar uma sensibilidade para o eixo x e y do mouse
-    /*
-    [SerializeField] private float xSensibility = 30f;
-    [SerializeField] private float ySensibility = 30f;
-    */
 
     [SerializeField] private float mouseSensitivity = 30f;
 
     [SerializeField] private float maxRotationX = 80f;
     [SerializeField] private float minRotationX = -80f;
 
+    public GunPickUp gunController;
+    private bool gunEquipped;
+
+    public GunMovementController gunSway;
 
     private void Awake() {
-        playerTransform = GetComponent<Transform>();    
+        playerTransform = GetComponent<Transform>();
+        gunController = GameObject.Find("Gun").GetComponent<GunPickUp>();
+        inputController = GetComponent<InputController>();
+
+        gunEquipped = false;
+    }
+
+    private void Update()
+    {
+        VerifyIfGunExists();
+        gunSway = GetComponentInChildren<GunMovementController>();
+
+        if(gunEquipped)
+        {
+            gunSway.SetGunMovement(inputController.playerOnFootMove.view.ReadValue<Vector2>());
+        }
     }
 
     public void setLook(Vector2 mouseInput)
@@ -31,5 +46,16 @@ public class PlayerLookController : MonoBehaviour
 
         playerCamera.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
         transform.Rotate(Vector3.up * (mouseInput.x * Time.deltaTime) * mouseSensitivity);
+    }
+
+
+    private bool VerifyIfGunExists()
+    {
+        if(gunController.isEquipped)
+        {
+            return gunEquipped = true;
+        }
+
+        return gunEquipped = false;
     }
 }

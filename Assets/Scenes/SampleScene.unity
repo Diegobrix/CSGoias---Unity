@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152601287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.52, y: 0, z: 0.568}
+  m_LocalPosition: {x: 0.52, y: 0.275, z: 0.568}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2165,6 +2165,7 @@ GameObject:
   - component: {fileID: 1211157272}
   - component: {fileID: 1211157271}
   - component: {fileID: 1211157270}
+  - component: {fileID: 1211157273}
   m_Layer: 6
   m_Name: Gun
   m_TagString: Untagged
@@ -2310,6 +2311,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   msg: 
   inputController: {fileID: 0}
+  gunMovementController: {fileID: 0}
+--- !u!114 &1211157273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211157262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3cf4d8a5c984c343a2d3bc970a27c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLook: {fileID: 1338533067}
+  gunMoveSpeed: 0.5
+  isEquipped: 0
 --- !u!1 &1275283246
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,6 +2556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9782639f4cdee4c9590db152441283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPlayerSpeed: 0
+  playerAccelerationSpeed: 0
   isGrounded: 0
 --- !u!114 &1338533067
 MonoBehaviour:
@@ -2556,6 +2575,7 @@ MonoBehaviour:
   mouseSensitivity: 30
   maxRotationX: 80
   minRotationX: -80
+  equippedGun: {fileID: 0}
 --- !u!114 &1338533068
 MonoBehaviour:
   m_ObjectHideFlags: 0
